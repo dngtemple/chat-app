@@ -14,7 +14,7 @@ export const useLogout= ()=>{
         
         setloading(true);
         try {
-            const res= await fetch("http://localhost:8000/api/auth/logout",{
+            const res= await fetch("api/auth/logout",{
                 method:"POST",
                 headers:{
                     "content-type":"application/json"

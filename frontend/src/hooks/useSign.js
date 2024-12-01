@@ -16,7 +16,7 @@ export default function useSign() {
         setloading(true)
 
         try {
-            const response = await fetch("http://localhost:8000/api/auth/signup",{
+            const response = await fetch("api/auth/signup",{
                 method:"POST",
                 headers:{
                     "content-type":"application/json"
