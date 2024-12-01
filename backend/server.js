@@ -1,5 +1,7 @@
 import express from "express"
-const app = express();
+// const app = express();
+
+import cors from "cors"
 
 
 import dotenv from "dotenv"
@@ -10,18 +12,26 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.js"
 import messageRoutes from "./routes/message.js"
-import userRoutes from "./routes/user.js"
+import userRoutes from "./routes/user.js";
+import { app ,server} from "./socket.js";
+
 
 
 import connectToMongoDB from "./database.js";
 
-app.use(cookieParser())
+
 app.use(express.json())
+
+app.use(cors({
+    credentials: true,
+    origin:"http://localhost:3000" // Allow credentials (cookies, sessions)
+  }));
+app.use(cookieParser())
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes)
 app.use("/api/users",userRoutes)
 
-app.listen(PORT,function(){
+server.listen(PORT,function(){
     connectToMongoDB();
     console.log("server running on port "+PORT);
 })

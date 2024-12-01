@@ -5,6 +5,7 @@ export const getAllUsers = async(req,res)=>{
 
         const loggedUser = await req.user._id;
         const allUsers = await userModel.find({_id:{$ne:loggedUser}}).select("-password")
+        // console.log(loggedUser,allUsers)
 
         if(allUsers){
             res.status(200).json(allUsers)

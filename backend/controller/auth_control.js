@@ -55,33 +55,34 @@ export const signup = async (req,res)=>{
 }
 
 
-export const login = async (req,res)=>{
-    try{
+export const login = async (req, res) => {
+    try {
+        const { userName, password } = req.body;
+        // console.log(req.body);
 
-        const {userName,password}= req.body;
+        const user = await userModel.findOne({ userName });
 
-        const user = await userModel.findOne({userName})
+        const passwordIsCorrect = await bcryptjs.compare(password, user?.password || "");
 
-        const passwordIsCorrect = await bcryptjs.compare(password,user?.password || "")
-
-        if(!user || !passwordIsCorrect){
-            res.status(400).json({success:false,message:"Invalid username or password"})
+        if (!user || !passwordIsCorrect) {
+            return res.status(400).json({ success: false, message: "Invalid username or password" });
         }
 
-        generateTokenAndCookie(user._id,res)
+        generateTokenAndCookie(user._id, res);
 
-        res.status(200).json({
-            id:user._id,
-            fullname:user.fullName,
-            username:user.userName,
-            profile:user.profilePic
-        })
+        return res.status(200).json({
+            id: user._id,
+            fullname: user.fullName,
+            username: user.userName,
+            profile: user.profilePic,
+        });
 
+    } catch (err) {
+
+        return res.status(500).json({ success: false, message: "Controller error", error: err.message });
     }
-    catch (err) {
-        res.status(500).json({ success: false, message: "Controller error", error: err.message });
-    }
-}
+};
+
 
 
 export const logout = async (req,res)=>{
