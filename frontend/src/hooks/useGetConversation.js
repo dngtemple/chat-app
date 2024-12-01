@@ -10,7 +10,7 @@ export default function useGetConversation() {
       setLoading(true); // Set loading state to true
 
       try {
-        const res = await fetch("http://localhost:8000/api/users/", {
+        const res = await fetch("api/users/", {
             method: "GET",
             credentials: "include", // This ensures cookies are included
             headers: {
