@@ -31,7 +31,7 @@ app.use(express.json())
 
 app.use(cors({
     credentials: true,
-    origin:"http://localhost:3000" // Allow credentials (cookies, sessions)
+    origin:"https://chat-app-cfsj.onrender.com" // Allow credentials (cookies, sessions)
   }));
 app.use(cookieParser())
 app.use("/api/auth",authRoutes);
